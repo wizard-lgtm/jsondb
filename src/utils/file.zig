@@ -5,7 +5,7 @@ const Allocator = std.mem.Allocator;
 ///
 /// Helper function, opens and returns file content to a buffer.
 ///
-fn read_file(f_name: []const u8, allocator: Allocator) ![]u8 {
+pub fn read_file(f_name: []const u8, allocator: *Allocator) ![]u8 {
     // get size of file for allocation
     const f_size = try file_size(f_name);
 
@@ -38,7 +38,7 @@ pub fn file_size(f_name: []const u8) !u64 {
 ///
 /// Helper function, returns true or false according to file exists.
 ///
-fn file_exists(f_name: []const u8) bool {
+pub fn file_exists(f_name: []const u8) bool {
     const stats = fs.cwd().statFile(f_name) catch {
         return false;
     };
@@ -46,7 +46,7 @@ fn file_exists(f_name: []const u8) bool {
     return kind == std.fs.File.Kind.file;
 }
 
-fn write_file(f_name: []const u8, buffer: []const u8) !void {
+pub fn write_file(f_name: []const u8, buffer: []const u8) !void {
     // write only flag
     const flags = std.fs.File.OpenFlags{ .mode = .write_only };
 
